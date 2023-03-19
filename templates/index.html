@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/static/favicon.jpg">
+    <title>Amazon Product Analyser</title>
+<style>
+* {
+  padding: 0;
+  margin: 0;
+}
+body {
+  background-image: url("{{url_for('static',filename='bg.jpg')}}");
+  background-color: #f2f2f2;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+h1 {
+  color: #333;
+  font-size: 2em;
+  margin-top: 50px;
+}
+
+p {
+  color: #555;
+  font-size: 1.2em;
+  margin-bottom: 50px;
+}
+
+form {
+  width: 50%;
+  float: right;
+  margin-right: 2%;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: large;
+}
+
+.Submitbtn {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.2em;
+}
+
+.Submitbtn:hover {
+  background-color: #45a149;
+}
+
+.loader {
+  position: fixed;
+  top:0;
+  left:0;
+  width:100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(51, 51, 51,0.7);
+  transition: opacity 0.2s, visibility 0.2s;
+  visibility: hidden;
+}
+
+.loader::after {
+  content: "";
+  width:75px;
+  height:75px;
+  border: 15px solid rgba(221, 221, 221, 0.75);
+  border-top-color:rgba(69, 160, 73,0.75);
+  border-radius: 50%;
+  animation: loading 0.75s ease-in-out infinite;
+}
+
+@keyframes loading {
+  from{transform: rotate(0turn)}
+  to{transform: rotate(1turn)}
+}
+</style>
+
+<script>
+    function showElement(){
+      loader=document.querySelector('.loader');
+      loader.style.visibility='visible';
+    }
+    function hideElement(){
+      loader=document.querySelector('.loader');
+      loader.style.visibility='hidden';
+    }
+</script>
+
+</head>
+<body onpageshow="hideElement()">
+    <div class="loader"></div>
+    <center>
+        <h1>PRODUCT PREDICTOR</h1>
+        <p>Find the best amazon product here...</p>
+        <div type="container">
+        <form method='POST' action="{{url_for('predict')}}">
+            <p><b>CHOOSE THE RIGHT PRODUCT!!!</b></p>
+            <p>The objective of this web application is to provide valuable analysis
+                of the products available on Amazon using customer reviews. It makes use 
+                of sentiment analysis model, trained with an already existing dataset.
+                It gives you an analysis with good accuracy in no time!!!
+            </p>
+            <input type="text" name="product_name" autofocus="onpageshow" placeholder="Enter the product name here" autocomplete="off"><br>
+            <button class="Submitbtn" onclick="showElement()">SUBMIT</button>
+        </div>
+    </form>
+    </center>
+</body>
+</html>

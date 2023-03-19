@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/static/favicon.jpg">
+    <title>Amazon Product Analyser</title>
+    <style>
+ * {
+  margin: 0;
+  padding: 0;
+  box-sizing:border-box;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  text-transform: capitalize;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  font-weight: normal;
+  transition: all .2s linear;
+}
+
+html {
+  font-size: 62.5%;
+  overflow: hidden;
+}
+
+body {
+  font-size: 62.5%;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  align-items:center;
+  justify-content:space-evenly;
+  background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.3)), url("{{url_for('static',filename='analysis.jpg')}}");
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 5.5rem;
+}
+header {
+  height: 55rem;
+  width: 35rem;
+  background: rgba(0,0,0,0.7);
+  box-shadow: 0 1rem 2rem rgba(255,255,255,0.2);
+  backdrop-filter: blur(.4rem);
+  text-align: center;
+  padding: 1rem;
+  border-radius: 1.3rem;
+}
+header .user {
+  padding-top: 2rem;
+}
+header .user img {
+  margin-top:3rem;
+  margin-bottom: 1rem;
+  height: 20rem;
+  width: 20rem;
+  border-radius: 50%;
+  object-fit:fill;
+  box-shadow: 0 0 0 1rem rgba(0,0,0,0.2);
+}
+header .navbar {
+   padding: 2.5rem 3rem;
+}
+header .navbar ul li {
+  margin: 1.5rem 0;
+  list-style: none;
+}
+header .navbar ul li a {
+  display: block;
+  padding: 1rem;
+  font-size: 2rem;
+  color: #ffffff;
+  background: rgba(0,0,0,0.7);
+  box-shadow: 0 1rem 2rem rgba(255,255,255,0.2);
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: 0.5s ease-out;
+}
+header .navbar ul li a:hover {
+  background: rgba(255,255,255,0.2);
+} 
+.container { 
+  height: 55rem;
+  width: 80rem;
+  background: rgba(0,0,0,0.7);
+  box-shadow: 0 1rem 2rem rgba(255,255,255,0.2);
+  backdrop-filter: blur(.4rem);
+  border-radius: 1.3rem;
+  overflow: scroll;
+}
+.home {
+  min-height: 100%;
+  padding-bottom: 10rem;
+  margin-top: 10rem;
+  margin-left:2rem;
+  margin-right: 2rem;
+}
+.home h3 {
+  font-size: 2.5rem;
+  font-weight: lighter;
+  color: #eee;
+  text-align: justify;
+  padding: 1rem;
+  margin: 1rem auto;
+  display: flex;
+  justify-content: center;
+}
+.title{
+  text-align: center !important;
+}
+.btn {
+    font-size: 2rem;
+    padding: .7rem 4rem;
+    color: #fff;
+    border-radius: 1rem;
+    background: rgba(0,0,0,0.7);
+    box-shadow: 0 1rem 2rem rgba(255,255,255,0.2);
+    margin-top: 1.5rem;
+    margin-left: 1.5rem;
+    transition: 0.5s ease-out;
+    cursor: pointer;
+}
+.btn:hover {
+  background: rgba(255,255,255,0.2);
+}
+.btn a{
+    color: #fff;
+    cursor: pointer;
+}
+.price{
+  cursor:auto;
+  font-size: 2.2rem;
+}
+.price:hover{
+  background: rgba(0,0,0,0.7);
+}
+.heading {
+  width: 35rem;
+  text-align: center;
+  padding: 1rem;
+  color: #fff;
+}
+.about {
+  margin-top:1rem;
+  margin-bottom: 1rem;
+  min-height: 100%;
+}
+.about .content {
+  font-size: 1.5rem;
+  color: #eee;
+  margin: auto 1.3rem;
+  text-align: justify;
+}
+.heading {
+  font-size: 2.5rem;
+  text-align: center;
+  margin: 0 auto;
+}
+.content li {
+  margin: 1.5rem;
+  list-style-type:decimal;
+}
+.imghead {
+  font-size: 2.5rem;
+  text-align: center;
+  margin: 1.5rem auto;
+  color: #eee;
+  padding-top: 2rem;
+}
+.about{
+  display: none;
+}
+.analysis {
+  display: none;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+.price{
+  display: inline-block;
+}
+.btns{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.image-2 img{
+  border:2px solid white;
+  border-radius: 6px;
+}
+.image-1{
+  margin: 5rem;
+}
+.image-2{
+  margin:3rem;
+}
+</style>
+</head>
+<body>
+    <header>
+        <div class="user">
+            <img src={{url_image}} alt="product image">
+        </div>
+        <nav class="navbar">
+            <ul>
+                <li><a onclick="f1()">Home</a></li>
+                <li><a onclick="f2()">About</a></li>
+                <li><a onclick="f3()">Analysis</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="container">
+        <center>
+          <section class="home" id="home">
+            <h3 class="title">PRODUCT NAME</h3>
+            <h3>{{name}}</h3>
+            <span class="btn price">{{price}}</span>
+          </section>
+        </center>
+        <section class="about" id="about">
+          <h1 class="heading">FEATURES</h1>
+          <div class="content">
+          </ul>
+            {% for item in description%} 
+                <li>{{item}}</li>
+            {% endfor %}
+          </ul>
+            <button class="btn"><a href={{nav_link}} target="_blank">KNOW MORE</a></button>
+          </div>
+        </section>
+        <section class="analysis" id="analysis">
+          <h3 class="imghead">SENTIMENTAL ANALYSIS</h3>
+          <center>
+            <div class="btns">
+              <button class="btn btn-1" onclick="f4()">GRAPH</button>
+              <button class="btn btn-2" onclick="f5()">WORDCLOUD</button>
+            </div>
+          <div class="image-1">
+            <img src={{url_plot}} alt="Review plot" width="300px" height="300px">
+          </div>
+          <div class="image-2">
+            <img src={{wordcloud_plt}} alt="Review plot">
+          </div>
+        </center>
+        </section>
+    </div>
+      <script>
+    function f1()
+    {
+      document.querySelector(".about").style.display = "none";
+      document.querySelector(".analysis").style.display = "none";
+      document.querySelector(".home").style.display = "block";
+    }
+    function f2()
+    {
+      document.querySelector(".home").style.display = "none";
+      document.querySelector(".analysis").style.display = "none";
+      document.querySelector(".about").style.display = "block";
+    }
+    function f3()
+    {
+      document.querySelector(".about").style.display = "none";
+      document.querySelector(".home").style.display = "none";
+      document.querySelector(".analysis").style.display = "block";
+    }
+    function f3()
+    {
+      document.querySelector(".about").style.display = "none";
+      document.querySelector(".analysis").style.display = "block";
+      document.querySelector(".home").style.display = "none";
+      document.querySelector(".image-1").style.display = "block";
+      document.querySelector(".image-2").style.display = "none";
+      document.querySelector(".btn-1").style.display = "block";
+      document.querySelector(".btn-2").style.display = "block";
+    }
+
+    function f4()
+    {
+      document.querySelector(".about").style.display = "none";
+      document.querySelector(".home").style.display = "none";
+      document.querySelector(".imghead").style.display = "block";
+      document.querySelector(".image-1").style.display = "block";
+      document.querySelector(".image-2").style.display = "none";
+    }
+    function f5()
+    {
+      document.querySelector(".about").style.display = "none";
+      document.querySelector(".home").style.display = "none";
+      document.querySelector(".imghead").style.display = "block";
+      document.querySelector(".image-2").style.display = "block";
+      document.querySelector(".image-1").style.display = "none";
+    }  
+  </script>
+</body>
+</html>
